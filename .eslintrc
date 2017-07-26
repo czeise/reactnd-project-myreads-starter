@@ -1,3 +1,9 @@
 {
-  "extends": "react-app"
+  "extends": "react-app",
+  "rules": {
+    "semi": ["warn", "always"],
+    "camelcase": ["warn"],
+    "brace-style": ["warn", "1tbs", { "allowSingleLine": true }],
+    "quotes": ["warn", "single", { "avoidEscape": true, "allowTemplateLiterals": true }]
+  }
 }
