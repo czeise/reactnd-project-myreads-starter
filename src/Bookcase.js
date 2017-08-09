@@ -11,22 +11,22 @@ function Bookcase (props) {
         <div>
           {console.log(props.books)}
           <Bookshelf
-            updateBook={(book, shelf) => {
-              props.updateBook(book, shelf);
+            getAllBooks={() => {
+              props.getAllBooks();
             }}
             title="Currently Reading"
             books={props.books.filter((book) => book.shelf === 'currentlyReading')}
           />
           <Bookshelf
-            updateBook={(book, shelf) => {
-              props.updateBook(book, shelf);
+            getAllBooks={() => {
+              props.getAllBooks();
             }}
             title="Want to Read"
             books={props.books.filter((book) => book.shelf === 'wantToRead')}
           />
           <Bookshelf
-            updateBook={(book, shelf) => {
-              props.updateBook(book, shelf);
+            getAllBooks={() => {
+              props.getAllBooks();
             }}
             title="Read"
             books={props.books.filter((book) => book.shelf === 'read')}

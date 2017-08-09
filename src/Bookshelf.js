@@ -10,8 +10,8 @@ function Bookshelf (props) {
           {props.books.map((book) => (
             <li key={book.id}>
               <Book
-                updateBook={(book, shelf) => {
-                  props.updateBook(book, shelf);
+                getAllBooks={() => {
+                  props.getAllBooks();
                 }}
                 book={book}
               />

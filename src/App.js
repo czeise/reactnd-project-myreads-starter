@@ -25,24 +25,6 @@ class BooksApp extends React.Component {
     this.getAllBooks();
   }
 
-  // TODO: This works, but I think shelf state probably belongs in Book.js, it can have the
-  // updateBooks method there, and it can call getAllBooks(), which can be passed through as a prop
-  // function
-  updateBooks(book, shelf) {
-    BooksAPI.update(book, shelf).then((book) => {
-      this.getAllBooks();
-    });
-  }
-
-  removeBook(book) {
-    this.setState((state) => ({
-      books: state.books.filter(b => b.id !== book.id)
-    }));
-
-    BooksAPI.update(book, 'none');
-  }
-
-
   render() {
     return (
       <div className="app">
@@ -73,8 +55,8 @@ class BooksApp extends React.Component {
           <div>
             {this.state.books.length > 0 && (
               <Bookcase
-                updateBook={(book, shelf) => {
-                  this.updateBooks(book, shelf);
+                getAllBooks={() => {
+                  this.getAllBooks();
                 }}
                 books={this.state.books}
               />
