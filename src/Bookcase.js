@@ -2,6 +2,11 @@ import React from 'react';
 import Bookshelf from './Bookshelf';
 
 function Bookcase (props) {
+  const SHELVES = [
+    {'key': 'currentlyReading', 'title': 'Currently Reading'},
+    {'key': 'wantToRead', 'title': 'Want to Read'},
+    {'key': 'read', 'title': 'Read'}
+  ];
   return (
     <div className="list-books">
       <div className="list-books-title">
@@ -10,27 +15,15 @@ function Bookcase (props) {
       <div className="list-books-content">
         <div>
           {console.log(props.books)}
-          <Bookshelf
-            getAllBooks={() => {
-              props.getAllBooks();
-            }}
-            title="Currently Reading"
-            books={props.books.filter((book) => book.shelf === 'currentlyReading')}
-          />
-          <Bookshelf
-            getAllBooks={() => {
-              props.getAllBooks();
-            }}
-            title="Want to Read"
-            books={props.books.filter((book) => book.shelf === 'wantToRead')}
-          />
-          <Bookshelf
-            getAllBooks={() => {
-              props.getAllBooks();
-            }}
-            title="Read"
-            books={props.books.filter((book) => book.shelf === 'read')}
-          />
+          {SHELVES.map((shelf) => (
+            <Bookshelf key={shelf.key}
+              getAllBooks={() => {
+                props.getAllBooks();
+              }}
+              title={shelf.title}
+              books={props.books.filter((book) => book.shelf === shelf.key)}
+            />
+          ))}
         </div>
       </div>
       <div className="open-search">
