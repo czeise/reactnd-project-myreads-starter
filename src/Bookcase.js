@@ -10,7 +10,12 @@ function Bookcase (props) {
       <div className="list-books-content">
         <div>
           {console.log(props.books)}
-          <Bookshelf books={props.books}/>
+          <Bookshelf
+            onAddBook={(book, shelf) => {
+              props.onAddBook(book, shelf);
+            }}
+            books={props.books}
+          />
           <div className="bookshelf">
             <h2 className="bookshelf-title">Want to Read</h2>
             <div className="bookshelf-books">

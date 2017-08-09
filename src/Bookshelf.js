@@ -8,7 +8,12 @@ function Bookshelf (props) {
       <div className="bookshelf-books">
         <ol className="books-grid">
           <li>{console.log(props.books)}
-            <Book book={props.books[0]} />
+            <Book
+              onAddBook={(book, shelf) => {
+                props.onAddBook(book, shelf);
+              }}
+              book={props.books[0]}
+            />
           </li>
           <li>
             <div className="book">
