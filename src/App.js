@@ -73,7 +73,7 @@ class BooksApp extends React.Component {
           <div>
             {this.state.books.length > 0 && (
               <Bookcase
-                onAddBook={(book, shelf) => {
+                updateBook={(book, shelf) => {
                   this.updateBooks(book, shelf);
                 }}
                 books={this.state.books}
