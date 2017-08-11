@@ -3,6 +3,7 @@ import Bookshelf from './Bookshelf';
 import PropTypes from 'prop-types';
 
 function Bookcase (props) {
+  const {getAllBooks, books} = props;
   const SHELVES = [
     {'key': 'currentlyReading', 'title': 'Currently Reading'},
     {'key': 'wantToRead', 'title': 'Want to Read'},
@@ -15,14 +16,14 @@ function Bookcase (props) {
       </div>
       <div className="list-books-content">
         <div>
-          {console.log(props.books)}
+          {console.log(books)}
           {SHELVES.map((shelf) => (
             <Bookshelf key={shelf.key}
               getAllBooks={() => {
-                props.getAllBooks();
+                getAllBooks();
               }}
               title={shelf.title}
-              books={props.books.filter((book) => book.shelf === shelf.key)}
+              books={books.filter((book) => book.shelf === shelf.key)}
             />
           ))}
         </div>

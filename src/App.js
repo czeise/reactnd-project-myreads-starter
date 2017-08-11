@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import * as BooksAPI from './BooksAPI';
 import './App.css';
 import Bookcase from './Bookcase';
@@ -18,7 +18,7 @@ class BooksApp extends Component {
 
   getAllBooks() {
     BooksAPI.getAll().then((books) => {
-      this.setState({ books });
+      this.setState({books});
     });
   }
 
@@ -27,6 +27,8 @@ class BooksApp extends Component {
   }
 
   render() {
+    const books = this.state.books;
+    
     return (
       <div className="app">
         {this.state.showSearchPage ? (
@@ -35,12 +37,12 @@ class BooksApp extends Component {
         ) : (
           // BOOKSHELF PAGE
           <div>
-            {this.state.books.length > 0 && (
+            {books.length > 0 && (
               <Bookcase
                 getAllBooks={() => {
                   this.getAllBooks();
                 }}
-                books={this.state.books}
+                books={books}
               />
             )}
           </div>
