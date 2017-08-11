@@ -34,12 +34,10 @@ class Search extends Component {
   }
 
   search(query) {
-    console.log(`query: ${query}`);
     if(query === '') {
       this.setState({searchResult: []});
     } else {
       BooksAPI.search(query, 20).then(books => {
-        console.log(books);
         if(books.error) {
           this.setState({searchResult: []});
         } else {
