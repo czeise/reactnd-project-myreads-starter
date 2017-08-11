@@ -7,8 +7,9 @@ class Book extends Component {
     shelf: this.props.book.shelf
   }
 
-  updateShelf(book, shelf) {
-    BooksAPI.update(book, shelf).then(() => {
+  updateShelf(shelf) {
+    this.setState({shelf});
+    BooksAPI.update(this.props.book, shelf).then(() => {
       this.props.getAllBooks();
     });
   }
@@ -18,7 +19,7 @@ class Book extends Component {
     const shelf = this.state.shelf;
     // Not all search result books have imageLinks
     const coverImageLink = (book.imageLinks === undefined) ? '' : book.imageLinks.thumbnail;
-    
+
     return (
       <div className="book">
         <div className="book-top">
@@ -34,7 +35,7 @@ class Book extends Component {
           <div className="book-shelf-changer">
             <select
               value={shelf}
-              onChange={(event) => this.updateShelf(book, event.target.value)}
+              onChange={(event) => this.updateShelf(event.target.value)}
             >
               <option value="none" disabled>Move to...</option>
               <option value="currentlyReading">Currently Reading</option>

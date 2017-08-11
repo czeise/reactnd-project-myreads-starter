@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import * as BooksAPI from './BooksAPI';
 import Book from './Book';
+import PropTypes from 'prop-types';
 
 class Search extends Component {
   // Using a controlled component style form (form is managed by React state)
@@ -13,17 +14,35 @@ class Search extends Component {
     this.setState({query});
   }
 
+  // It seems like there should be a better way to do this, but this seems to work. This method
+  // takes in the books from the search and for each of them loops through my existing book shelf
+  // and if it finds that same book, updates the shelf of the result book
+  processResults(books) {
+    this.setState({
+      searchResult: books.map(book => {
+        book.shelf = 'none';
+        for (const shelvedBook of this.props.books) {
+          if (book.id === shelvedBook.id)  {
+            book.shelf = shelvedBook.shelf;
+            break;
+          }
+        }
+        return book;
+      })
+    });
+  }
+
   search(query) {
     console.log(`query: ${query}`);
     if(query === '') {
       this.setState({searchResult: []});
     } else {
-      BooksAPI.search(query, 20).then((books) => {
+      BooksAPI.search(query, 20).then(books => {
         console.log(books);
         if(books.error) {
           this.setState({searchResult: []});
         } else {
-          this.setState({searchResult: books});
+          this.processResults(books);
         }
       });
     }
@@ -31,7 +50,7 @@ class Search extends Component {
 
   render() {
     const {query, searchResult} = this.state;
-    
+
     return (
       <div className="search-books">
         <div className="search-books-bar">
@@ -62,9 +81,9 @@ class Search extends Component {
             {searchResult.map((book) => (
               <li key={book.id}>
                 <Book
-                  // getAllBooks={() => {
-                  //   props.getAllBooks();
-                  // }}
+                  getAllBooks={() => {
+                    this.props.getAllBooks();
+                  }}
                   book={book}
                 />
               </li>
@@ -75,5 +94,10 @@ class Search extends Component {
     );
   }
 }
+
+Search.propTypes = {
+  getAllBooks: PropTypes.func.isRequired,
+  books: PropTypes.array.isRequired
+};
 
 export default Search;
