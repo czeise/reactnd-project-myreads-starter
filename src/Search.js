@@ -15,9 +15,9 @@ class Search extends Component {
     this.setState({query});
   }
 
-  // It seems like there should be a better way to do this, but this seems to work. This method
-  // takes in the books from the search and for each of them loops through my existing book shelf
-  // and if it finds that same book, updates the shelf of the result book
+  // It seems like there should be a better way to do this, but this works. This method takes in the
+  // books from the search and for each of them loops through my existing book shelf and if it finds
+  // that same book, updates the shelf of the result book
   processResults(books) {
     this.setState({
       searchResult: books.map(book => {

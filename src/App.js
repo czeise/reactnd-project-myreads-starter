@@ -26,7 +26,7 @@ class BooksApp extends Component {
     return (
       <div className="app">
         <Route exact path="/" render={() => (
-          // BOOKSHELF PAGE
+          // BOOKCASE PAGE
           <div>
             {books.length > 0 && (
               <Bookcase
