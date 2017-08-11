@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { Component } from 'react';
 import * as BooksAPI from './BooksAPI';
+import PropTypes from 'prop-types';
 
-class Book extends React.Component {
+class Book extends Component {
   state = {
     shelf: this.props.book.shelf
   }
@@ -33,5 +34,10 @@ class Book extends React.Component {
     );
   }
 }
+
+Book.propTypes = {
+  getAllBooks: PropTypes.func.isRequired,
+  book: PropTypes.object.isRequired
+};
 
 export default Book;
