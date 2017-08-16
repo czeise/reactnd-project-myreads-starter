@@ -1,10 +1,16 @@
 import React, {Component} from 'react';
 import * as BooksAPI from './BooksAPI';
 import {Link} from 'react-router-dom';
+import * as Lodash from '../lodash.custom.min.js';
 import Book from './Book';
 import PropTypes from 'prop-types';
 
 class Search extends Component {
+  constructor(props) {
+    super(props);
+    this.handleOnChange = this.handleOnChange.bind(this);
+    this.search = Lodash.debounce(this.search, 500);
+  }
   // Using a controlled component style form (form is managed by React state)
   state = {
     query: '',
@@ -15,29 +21,21 @@ class Search extends Component {
     this.setState({query});
   }
 
-  // It seems like there should be a better way to do this, but this works. This method takes in the
-  // books from the search and for each of them loops through my existing book shelf and if it finds
-  // that same book, updates the shelf of the result book
   processResults(books) {
     this.setState({
       searchResult: books.map(book => {
-        book.shelf = 'none';
-        for (const shelvedBook of this.props.books) {
-          if (book.id === shelvedBook.id)  {
-            book.shelf = shelvedBook.shelf;
-            break;
-          }
-        }
+        const shelvedBook = this.props.books.find(shelvedBook => shelvedBook.id === book.id);
+        book.shelf = shelvedBook ? shelvedBook.shelf : 'none';
         return book;
       })
     });
   }
 
-  search(query) {
-    if(query === '') {
+  search() {
+    if(this.state.query === '') {
       this.setState({searchResult: []});
     } else {
-      BooksAPI.search(query, 20).then(books => {
+      BooksAPI.search(this.state.query, 20).then(books => {
         if(books.error) {
           this.setState({searchResult: []});
         } else {
@@ -45,6 +43,11 @@ class Search extends Component {
         }
       });
     }
+  }
+
+  handleOnChange(event) {
+    this.updateQuery(event.target.value);
+    this.search();
   }
 
   render() {
@@ -67,10 +70,7 @@ class Search extends Component {
               type="text"
               placeholder="Search by title or author"
               value={query}
-              onChange={(event) => {
-                this.updateQuery(event.target.value);
-                this.search(event.target.value);
-              }}
+              onChange={this.handleOnChange}
             />
 
           </div>
