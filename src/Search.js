@@ -50,6 +50,7 @@ class Search extends Component {
     this.search();
   }
 
+// nes stuff
   render() {
     const {query, searchResult} = this.state;
 
